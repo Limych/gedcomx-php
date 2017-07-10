@@ -102,6 +102,57 @@ class Person extends Subject implements HasFacts, HasFields
     }
 
     /**
+     * {@inheritDoc}
+     * @see \Gedcomx\Conclusion\Subject::embed()
+     */
+    public function embed($source)
+    {
+        parent::embed($source);
+        
+        /** @var self $source */
+        
+        if ($this->private == null){
+            $this->private = $source->isPrivate();
+        }
+        if ($this->living == null) {
+            $this->living = $source->isLiving();
+        }
+        if ($this->principal == null) {
+            $this->principal = $source->getPrincipal();
+        }
+        if ($this->principal == null) {
+            $this->principal = $source->getPrincipal();
+        }
+        if ($this->gender == null) {
+            $this->gender = $source->getGender();
+        }
+        if ($this->displayExtension != null && $source->getDisplayExtension() != null) {
+            $this->displayExtension->embed($source->getDisplayExtension());
+        }
+        else if ($source->getDisplayExtension() != null) {
+            $this->displayExtension = $source->getDisplayExtension();
+        }
+        if ($source->getNames() != null) {
+            if( $this->names == null ){
+                $this->names = array();
+            }
+            $this->names = array_merge($this->names, $source->getNames());
+        }
+        if ($source->getFacts() != null) {
+            if( $this->facts == null ){
+                $this->facts = array();
+            }
+            $this->facts = array_merge($this->facts, $source->getFacts());
+        }
+        if ($source->getFields() != null) {
+            if( $this->fields == null ){
+                $this->fields = array();
+            }
+            $this->fields = array_merge($this->fields, $source->getFields());
+        }
+    }
+
+    /**
      * Whether this person is the 'principal' person extracted from the record.
      *
      * @return boolean

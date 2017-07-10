@@ -761,7 +761,7 @@ class SourceDescription extends HypermediaEnabledData
             }
         }
         if (isset($o['mediator'])) {
-            $this->mediator = $x instanceof ResourceReference ? $x : new ResourceReference($o["mediator"]);
+            $this->mediator = $o["mediator"] instanceof ResourceReference ? $o["mediator"] : new ResourceReference($o["mediator"]);
         }
         $this->sources = array();
         if (isset($o['sources'])) {

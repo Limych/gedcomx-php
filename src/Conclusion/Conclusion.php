@@ -9,7 +9,6 @@
 
 namespace Gedcomx\Conclusion;
 
-use Gedcomx\Common\ExtensibleData;
 use Gedcomx\Common\HasNotes;
 use Gedcomx\Common\Attributable;
 use Gedcomx\Common\Attribution;
@@ -89,6 +88,40 @@ class Conclusion extends HypermediaEnabledData implements Attributable, Referenc
             }
 
             $this->initFromReader($o);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \Gedcomx\Common\ExtensibleData::embed()
+     */
+    public function embed($source)
+    {
+        parent::embed($source);
+        
+        /** @var self $source */
+        
+        if( $this->lang != null ){
+            $this->lang = $source->getLang();
+        }
+        if( $this->confidence != null ){
+            $this->confidence = $source->getConfidence();
+        }
+        if( $this->attribution != null ){
+            $this->attribution = $source->getAttribution();
+        }
+        if( $this->analysis != null ){
+            $this->analysis = $source->getAnalysis();
+        }
+        if( $this->notes == null ){
+            $this->notes = $source->getNotes();
+        } elseif ($source->getNotes() != null) {
+            $this->notes = array_merge($this->notes, $source->getNotes());
+        }
+        if( $this->sources == null ){
+            $this->sources = $source->getSources();
+        } elseif ($source->getSources() != null) {
+            $this->sources = array_merge($this->sources, $source->getSources());
         }
     }
 

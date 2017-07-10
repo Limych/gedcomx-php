@@ -377,7 +377,7 @@ class Address extends ExtensibleData
      *
      * @param array $o
      */
-    public function initFromArray($o)
+    public function initFromArray(array $o)
     {
         if (isset($o['city'])) {
             $this->city = $o["city"];
@@ -433,7 +433,7 @@ class Address extends ExtensibleData
      *
      * @return bool Whether a child element was set.
      */
-    protected function setKnownChildElement($xml) {
+    protected function setKnownChildElement(\XMLReader $xml) {
         $happened = parent::setKnownChildElement($xml);
         if ($happened) {
           return true;
@@ -536,7 +536,7 @@ class Address extends ExtensibleData
      *
      * @return bool Whether an attribute was set.
      */
-    protected function setKnownAttribute($xml) {
+    protected function setKnownAttribute(\XMLReader $xml) {
         if (parent::setKnownAttribute($xml)) {
             return true;
         }
@@ -549,7 +549,7 @@ class Address extends ExtensibleData
      *
      * @param \XMLWriter $writer The XML writer.
      */
-    public function writeXmlContents($writer)
+    public function writeXmlContents(\XMLWriter $writer)
     {
         parent::writeXmlContents($writer);
         if ($this->city) {

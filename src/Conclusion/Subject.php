@@ -11,7 +11,6 @@ namespace Gedcomx\Conclusion;
 
 use Gedcomx\Common\Attributable;
 use Gedcomx\Common\EvidenceReference;
-use Gedcomx\Common\ExtensibleData;
 use Gedcomx\Source\SourceReference;
 
 /**
@@ -73,6 +72,37 @@ class Subject extends Conclusion implements Attributable
             }
 
             $this->initFromReader($o);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \Gedcomx\Conclusion\Conclusion::embed()
+     */
+    public function embed($source)
+    {
+        parent::embed($source);
+        
+        /** @var self $source */
+        
+        if ($this->extracted == null) {
+            $this->extracted = $source->getExtracted();
+        }
+        
+        if( $this->identifiers == null ) {
+            $this->identifiers = $source->getIdentifiers();
+        } elseif ($source->getIdentifiers() != null) {
+            $this->identifiers = array_merge($this->identifiers, $source->getIdentifiers());
+        }
+        if( $this->media == null ) {
+            $this->media = $source->getMedia();
+        } elseif ($source->getMedia() != null) {
+            $this->media = array_merge($this->media, $source->getMedia());
+        }
+        if( $this->evidence == null ) {
+            $this->evidence = $source->getEvidence();
+        } elseif ($source->getEvidence() != null) {
+            $this->evidence = array_merge($this->evidence, $source->getEvidence());
         }
     }
 

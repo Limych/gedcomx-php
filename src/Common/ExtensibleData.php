@@ -344,4 +344,25 @@ class ExtensibleData
             $writer->writeAttribute('id', $this->id);
         }
     }
+
+    /**
+     * Merge another object with same type into this
+     * 
+     * @param self $source
+     * 
+     * @throws \LogicException
+     */
+    public function embed($source)
+    {
+        $class = get_class($this);
+        
+        if (! $source instanceof $class)
+            throw new \LogicException('Error: $source (' . get_class($source) . ') should be instance of ' . $class);
+
+        if ($this->extensionElements == null) {
+            $this->extensionElements = $source->getExtensionElements();
+        } elseif ($source->getExtensionElements() != null) {
+            $this->extensionElements = array_merge($this->extensionElements, $source->getExtensionElements());
+        }
+    }
 }
