@@ -693,10 +693,10 @@ class SourceDescription extends HypermediaEnabledData
         if ($this->identifiers) {
             $ab = array();
             foreach ($this->identifiers as $i => $x) {
-                $ab[$i] = array();
-                foreach ($x as $j => $y) {
-                    $ab[$i][$j] = $y->getValue();
+                if (empty($ab[$x->getType()])) {
+                    $ab[$x->getType()] = array();
                 }
+                $ab[$x->getType()][] = $x->getValue();
             }
             $a['identifiers'] = $ab;
         }
@@ -804,18 +804,19 @@ class SourceDescription extends HypermediaEnabledData
         }
         $this->identifiers = array();
         if (isset($o['identifiers'])) {
+            $this->identifiers = array();
             foreach ($o['identifiers'] as $i => $x) {
-                if (is_array($x)) {
-                    $this->identifiers[$i] = array();
-                    foreach ($x as $j => $y) {
-                        $this->identifiers[$i][$j] = new Identifier();
-                        $this->identifiers[$i][$j]->setValue($y);
-                    }
+                if (!is_array($x)) {
+                    $x = array($x);
                 }
-                else {
-                    $this->identifiers[$i] = new Identifier($x);
+                foreach($x as $idValue){
+                    $this->identifiers[] = new Identifier([
+                        'type'  => $i,
+                        'value' => $idValue,
+                    ]);
                 }
             }
+            unset($o['identifiers']);
         }
         if (isset($o['created'])) {
             $this->created = $o["created"];

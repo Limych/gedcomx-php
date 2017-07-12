@@ -210,7 +210,10 @@ class Subject extends Conclusion implements Attributable
         if ($this->identifiers) {
             $ab = array();
             foreach ($this->identifiers as $i => $x) {
-                $ab[$x->getType()] = array($x->getValue());
+                if (empty($ab[$x->getType()])) {
+                    $ab[$x->getType()] = array();
+                }
+                $ab[$x->getType()][] = $x->getValue();
             }
             $a['identifiers'] = $ab;
         }
@@ -251,10 +254,10 @@ class Subject extends Conclusion implements Attributable
                     $x = array($x);
                 }
                 foreach($x as $idValue){
-                    $identifier = new Identifier();
-                    $identifier->setType($i);
-                    $identifier->setValue($idValue);
-                    array_push($this->identifiers, $identifier);
+                    $this->identifiers[] = new Identifier([
+                        'type'  => $i,
+                        'value' => $idValue,
+                    ]);
                 }
             }
             unset($o['identifiers']);
