@@ -926,7 +926,7 @@ class Gedcomx extends HypermediaEnabledData
     /**
      * Add a agent to the data set.
      *
-     * @param \Gedcomx\Agent\Agent $agent The agent to be added.
+     * @param \Gedcomx\Agent\Agent $document The agent to be added.
      */
     public function addAgent(Agent $agent) {
         if ($agent !== null) {
@@ -934,6 +934,20 @@ class Gedcomx extends HypermediaEnabledData
                 $this->agents = array();
             }
             $this->agents[]  = $agent;
+        }
+    }
+    
+    /**
+     * Add a document to the data set.
+     *
+     * @param Document $agent The document to be added.
+     */
+    public function addDocument(Document $document) {
+        if ($document !== null) {
+            if ($this->documents === null){
+                $this->documents = array();
+            }
+            $this->documents[]  = $document;
         }
     }
     
@@ -948,6 +962,48 @@ class Gedcomx extends HypermediaEnabledData
                 $this->places = array();
             }
             $this->places[]  = $place;
+        }
+    }
+    
+    /**
+     * Add a collection to the data set.
+     *
+     * @param Collection $collection The collection to be added.
+     */
+    public function addCollection(Collection $collection) {
+        if ($collection !== null) {
+            if ($this->collections === null){
+                $this->collections = array();
+            }
+            $this->collections[]  = $collection;
+        }
+    }
+    
+    /**
+     * Add a record descriptor to the data set.
+     *
+     * @param RecordDescriptor $recordDescriptor The record descriptor to be added.
+     */
+    public function addRecordDescriptor(RecordDescriptor $recordDescriptor) {
+        if ($recordDescriptor !== null) {
+            if ($this->recordDescriptors === null){
+                $this->recordDescriptors = array();
+            }
+            $this->recordDescriptors[]  = $recordDescriptor;
+        }
+    }
+    
+    /**
+     * Add a field to the data set.
+     *
+     * @param Field $field The field to be added.
+     */
+    public function addField(Field $field) {
+        if ($field !== null) {
+            if ($this->fields === null){
+                $this->fields = array();
+            }
+            $this->fields[]  = $field;
         }
     }
 
