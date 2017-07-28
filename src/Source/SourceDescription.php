@@ -427,7 +427,7 @@ class SourceDescription extends HypermediaEnabledData implements Attributable
      *
      * @param \Gedcomx\Common\Attribution $attribution
      */
-    public function setAttribution($attribution)
+    public function setAttribution(Attribution $attribution)
     {
         $this->attribution = $attribution;
     }
