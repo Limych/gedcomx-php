@@ -3,6 +3,8 @@
 namespace Gedcomx\GedcomxFile;
 
 use Gedcomx\Extensions\FamilySearch\FamilySearchPlatform;
+use Gedcomx\Util\JsonMapper;
+use Gedcomx\Util\XmlMapper;
 use Gedcomx\Gedcomx;
 
 /**
