@@ -3,6 +3,7 @@
 namespace Gedcomx\Rt;
 
 use Gedcomx\Agent\Agent;
+use Gedcomx\Common\Attribution;
 use Gedcomx\Common\EvidenceReference;
 use Gedcomx\Common\Note;
 use Gedcomx\Conclusion\Conclusion;
@@ -255,6 +256,11 @@ class GedcomxModelVisitorBase implements GedcomxModelVisitor
                 $citation->accept($this);
             }
         }
+
+        $attribution = $sourceDescription->getAttribution();
+        if ($attribution !== null) {
+            $this->visitAttribution($attribution);
+        }
         array_pop($this->contextStack);
     }
 
@@ -348,6 +354,16 @@ class GedcomxModelVisitorBase implements GedcomxModelVisitor
     }
 
     /**
+     * Visits the attribution.
+     *
+     * @param \Gedcomx\Common\Attribution $attribution
+     */
+    protected function visitAttribution(Attribution $attribution)
+    {
+        //no-op
+    }
+
+    /**
      * Visits the conclusion.
      *
      * @param \Gedcomx\Conclusion\Conclusion $conclusion
@@ -368,6 +384,11 @@ class GedcomxModelVisitorBase implements GedcomxModelVisitor
             foreach ($notes as $note) {
                 $note->accept($this);
             }
+        }
+
+        $attribution = $conclusion->getAttribution();
+        if ($attribution !== null) {
+            $this->visitAttribution($attribution);
         }
     }
 
@@ -591,7 +612,12 @@ class GedcomxModelVisitorBase implements GedcomxModelVisitor
      */
     public function visitSourceReference(SourceReference $sourceReference)
     {
-        //no-op
+        array_push($this->contextStack, $sourceReference);
+        $attribution = $sourceReference->getAttribution();
+        if ($attribution !== null) {
+            $this->visitAttribution($attribution);
+        }
+        array_pop($this->contextStack);
     }
 
     /**
