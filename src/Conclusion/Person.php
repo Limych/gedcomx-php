@@ -124,10 +124,9 @@ class Person extends Subject implements HasFacts, HasFields
         if ($this->gender == null) {
             $this->gender = $source->getGender();
         }
-        if ($this->displayExtension != null && $source->getDisplayExtension() != null) {
+        if ($this->displayExtension == null && $source->getDisplayExtension() != null) {
             $this->displayExtension->embed($source->getDisplayExtension());
-        }
-        else if ($source->getDisplayExtension() != null) {
+        } elseif ($source->getDisplayExtension() != null) {
             $this->displayExtension = $source->getDisplayExtension();
         }
         if ($source->getNames() != null) {
