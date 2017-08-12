@@ -91,7 +91,14 @@ class Subject extends Conclusion
         if( $this->identifiers == null ) {
             $this->identifiers = $source->getIdentifiers();
         } elseif ($source->getIdentifiers() != null) {
-            $this->identifiers = array_merge($this->identifiers, $source->getIdentifiers());
+            foreach ($source->getIdentifiers() as $new_id) {
+                foreach ($this->identifiers as $id) {
+                    if (($new_id->getValue() == $id->getValue()) && ($new_id->getType() == $id->getType())) {
+                        continue 2;
+                    }
+                }
+                $this->identifiers[] = $new_id;
+            }
         }
         if( $this->media == null ) {
             $this->media = $source->getMedia();
