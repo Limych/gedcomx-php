@@ -69,7 +69,7 @@ class GedcomxLocalReferenceResolver extends GedcomxModelVisitorBase
 
     protected function bindIfNeeded(ExtensibleData $candidate)
     {
-        if ($this->$resource === null && $this->resourceId == $candidate->getId()) {
+        if ($this->resource === null && $this->resourceId == $candidate->getId()) {
             $this->resource = $candidate;
         }
     }
